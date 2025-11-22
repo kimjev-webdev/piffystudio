@@ -1,0 +1,30 @@
+# ---- PYTHON ----
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.sqlite3
+*.log
+
+# ---- VENV ----
+venv/
+env/
+*.env
+
+# ---- DJANGO ----
+staticfiles/
+media/
+db.sqlite3
+
+# ---- EDITOR ----
+.vscode/
+.idea/
+
+# ---- OS JUNK ----
+.DS_Store
+Thumbs.db
+
+# ---- VENV ON WINDOWS ----
+Scripts/
+Lib/
+Include/
