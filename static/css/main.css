@@ -129,7 +129,7 @@ h1, h2, h3, h4, h5, h6 {
 
 .nav-menu {
     position: fixed;
-    top: 80px;
+    top: 85px;
     left: 0;
     display: none;
     flex-direction: column;
@@ -150,6 +150,11 @@ h1, h2, h3, h4, h5, h6 {
 .nav-menu.open-active {
     display: flex;
 }
+
+.nav-menu li:first-child a {
+    padding-top: 1.2rem;
+}
+
 
 /* ------------------------------------
    MENU ITEM STYLING
