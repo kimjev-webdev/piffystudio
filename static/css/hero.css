@@ -127,6 +127,15 @@
     animation: diptychFade 1.2s ease forwards .4s;
 }
 
+.communion {
+    margin-right: 20px
+    width: 50%;
+    height: auto;
+    object-fit: contain;
+    opacity: 0;
+    animation: diptychFade 1.2s ease forwards .4s;
+}
+
 /* Entrance animation (both fade together) */
 @keyframes diptychFade {
     0% { opacity: 0; transform: scale(0.75); }
