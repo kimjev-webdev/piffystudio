@@ -423,31 +423,14 @@ dl, ol, ul {
 ------------------------------------ */
 .caption {
     position: fixed;
-    left: 2.5rem;
-    bottom: 1.5rem;
-    color: var(--accent);
-    opacity: 0.85;
-    font-size: 0.9rem;
-    pointer-events: none;
-    text-align: left;
-    z-index: 4000;
+    left: 2rem;
+    bottom: 2rem;
+    transform: none;
+    margin: 0;
+    z-index: 999;
+    pointer-events: auto;
+    color:#f960d0
 }
-
-
-
-    /* Place caption directly under the carousel / trio */
-    .caption {
-        position: relative;
-        bottom: 2.5rem;
-        right: 2.0rem;
-        transform: none;
-        margin: 16px auto 0;
-        text-align: center;
-        font-size: 0.9rem;
-        width: 100%;
-        max-width: 980px;
-        pointer-events: auto;
-    }
 
 
 
