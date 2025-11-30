@@ -1,0 +1,335 @@
+/* ------------------------------------
+   FONTS
+------------------------------------ */
+
+/* Body font */
+@import url('https://fonts.googleapis.com/css2?family=Inconsolata:wght@300;400;600&display=swap');
+
+/* Menu + Headers — Futura style, geometric, uppercase */
+@import url('https://fonts.googleapis.com/css2?family=League+Spartan:wght@700&display=swap');
+
+
+/* ------------------------------------
+   GLOBAL SMOOTHING
+------------------------------------ */
+
+* {
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+}
+
+
+/* ------------------------------------
+   KEYFRAMES
+------------------------------------ */
+
+@keyframes fade {
+    0%   { opacity: 0; }
+    5%   { opacity: 1; }
+    30%  { opacity: 1; }
+    35%  { opacity: 0; }
+    100% { opacity: 0; }
+}
+
+@keyframes trioIn {
+    0%   { opacity: 0; transform: translate(-50%, calc(-50% + 60px)) scale(0.6); }
+    60%  { opacity: 1; transform: translate(-50%, calc(-50% - 5px)) scale(1); }
+    100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes float {
+    0%   { transform: translate(-50%, -50%) scale(1); }
+    50%  { transform: translate(-50%, calc(-50% - 6px)) scale(1.01); }
+    100% { transform: translate(-50%, -50%) scale(1); }
+}
+
+@keyframes breathe {
+    0%   { transform: scale(1); }
+    50%  { transform: scale(1.03); }
+    100% { transform: scale(1); }
+}
+
+
+/* ------------------------------------
+   THEME VARIABLES
+------------------------------------ */
+
+:root {
+    --background: #def9d2;
+    --accent: #f960d0;
+}
+
+
+/* ------------------------------------
+   GLOBAL BASE
+------------------------------------ */
+
+body {
+    background-color: var(--background);
+    font-family: "Inconsolata", monospace;
+    font-size: 13px;
+    letter-spacing: 2px;
+}
+
+a {
+    text-decoration: none;
+    color: inherit;
+}
+
+.page-content {
+    padding: 0;
+    margin: 0;
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+
+/* ------------------------------------
+   TYPOGRAPHY
+------------------------------------ */
+
+.nav-menu a,
+.nav-menu button,
+h1, h2, h3, h4, h5, h6 {
+    font-family: "League Spartan", sans-serif;
+    text-transform: uppercase;
+    line-height: 0.5px;
+    color: var(--accent);
+}
+
+
+/* ------------------------------------
+   NAV WRAPPER
+------------------------------------ */
+
+.nav {
+    position: fixed;
+    top: 1rem;
+    left: 1rem;
+    z-index: 3000;
+}
+
+.hover-zone { padding-right: 50px; padding-bottom: 40px; }
+
+
+/* ------------------------------------
+   NAV TOGGLE BUTTON
+------------------------------------ */
+
+.nav-toggle {
+    width: 48px;
+    height: 48px;
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    transition: transform 0.45s ease;
+    transform: rotate(0deg);
+    z-index: 3100;
+}
+
+/* the dots */
+.dot {
+    width: 8px;
+    height: 8px;
+    background: var(--accent);
+    border-radius: 50%;
+    position: absolute;
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* their positions */
+.dot-1 { top: 20%; }
+.dot-5 { top: 80%; }
+.dot-2 { left: 20%; }
+.dot-4 { left: 80%; }
+
+.nav-toggle.active {
+    transform: rotate(405deg);
+}
+
+
+/* ------------------------------------
+   NAV MENU PANEL
+------------------------------------ */
+
+.nav-menu {
+    position: fixed;
+    top: 85px;
+    left: 0;
+    opacity: 0;
+    transform: translateY(-15px);
+    pointer-events: none;
+    display: flex;
+    transition: opacity .45s ease, transform .45s ease;
+    flex-direction: column;
+    gap: 1.6rem;
+    height: 100vh;
+    width: 100vw;
+    background: var(--background);
+    z-index: 2000;
+    list-style: none;
+}
+
+.nav-menu.open-active,
+.nav-menu.open-hover {
+    opacity: 1;
+    transform: translateY(0);
+    pointer-events: auto;
+    background: transparent;
+}
+
+.nav-menu.closing {
+    opacity: 0;
+    transform: translateY(-10px) scale(1.02);
+    pointer-events: none;
+}
+
+dl, ol, ul {
+   padding-left: 1rem !important;
+}
+
+
+/* ------------------------------------
+   MENU ITEM STYLING
+------------------------------------ */
+
+.nav-item,
+.nav-sub {
+    font-size: 2rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    width: 100%;
+    text-align: left;
+    color: var(--accent);
+    font-family: "League Spartan", sans-serif;
+    text-transform: uppercase;
+}
+
+.nav-sub {
+    font-size: 1.3rem;
+}
+
+
+/* ------------------------------------
+   FIXED CASCADE + STAGGER ANIMATION
+------------------------------------ */
+
+.nav-menu li button,
+.nav-menu li .nav-item,
+.nav-menu li .nav-sub {
+    opacity: 0;
+    transform: translateY(20px);
+    transition: opacity .4s ease, transform .4s ease;
+}
+
+.nav-menu.open-active li button,
+.nav-menu.open-active li .nav-item,
+.nav-menu.open-active li .nav-sub,
+.nav-menu.open-hover li button,
+.nav-menu.open-hover li .nav-item,
+.nav-menu.open-hover li .nav-sub {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+/* stagger reveal */
+.nav-menu.open-active li:nth-child(1) button,
+.nav-menu.open-hover li:nth-child(1) button { transition-delay: .1s; }
+.nav-menu.open-active li:nth-child(2) button,
+.nav-menu.open-hover li:nth-child(2) button { transition-delay: .2s; }
+.nav-menu.open-active li:nth-child(3) button,
+.nav-menu.open-hover li:nth-child(3) button { transition-delay: .3s; }
+.nav-menu.open-active li:nth-child(4) button,
+.nav-menu.open-hover li:nth-child(4) button { transition-delay: .4s; }
+.nav-menu.open-active li:nth-child(5) button,
+.nav-menu.open-hover li:nth-child(5) button { transition-delay: .5s; }
+
+
+/* ------------------------------------
+   SUBMENU
+------------------------------------ */
+
+.submenu {
+    opacity: 0;
+    pointer-events: none;
+    height: 0;
+    overflow: hidden;
+    margin-top: 0.3rem;
+    padding-left: 0.5rem;
+    transition: opacity .3s ease, height .3s ease;
+}
+
+.submenu.open {
+    opacity: 1;
+    pointer-events: auto;
+    height: auto;
+}
+
+/* Hover expand */
+@media (hover: hover) and (pointer: fine) {
+    .has-sub:hover .submenu {
+        opacity: 1;
+        pointer-events: auto;
+        height: auto;
+    }
+}
+
+.submenu li {
+    list-style: none;
+    margin: 0.4rem 0;
+    padding: 0;
+}
+
+/* Submenu item fade */
+.submenu li {
+    opacity: 0;
+    transform: translateY(10px);
+    transition: opacity .35s ease, transform .35s ease;
+}
+
+.submenu.open li,
+.has-sub:hover .submenu li {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.submenu li:nth-child(1) { transition-delay: .1s; }
+.submenu li:nth-child(2) { transition-delay: .3s; }
+.submenu li:nth-child(3) { transition-delay: .5s; }
+
+
+/* ------------------------------------
+   BREATHING ANIMATION
+------------------------------------ */
+
+.nav-menu.alive .nav-item,
+.nav-menu.alive .nav-sub {
+    animation: breathe 4s ease-in-out infinite;
+    opacity: 0.9;
+    transform-origin: center;
+}
+
+.nav-menu .nav-item:hover,
+.nav-menu .nav-sub:hover {
+    animation: breathe 1.4s ease-in-out infinite;
+    opacity: 1;
+}
+
+
+/* ------------------------------------
+   MEDIA QUERIES
+------------------------------------ */
+
+@media (min-width: 1024px) {
+    .nav-menu { width: 33vw; }
+}
+
+@media (min-width: 1600px) {
+    .nav-menu { width: 16.6vw; }
+}
