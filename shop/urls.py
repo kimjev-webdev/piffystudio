@@ -8,6 +8,9 @@ urlpatterns = [
     path('manage/products/add/', views.add_product, name='add_product'),
     path('manage/products/<int:pk>/edit/', views.edit_product, name='edit_product'),
     path('manage/products/<int:pk>/delete/', views.delete_product, name='delete_product'),
+    path("manage/products/bulk-delete/", views.bulk_delete, name="bulk_delete"),
+    path("manage/products/<int:pk>/duplicate/", views.duplicate_product, name="duplicate_product"),
+
 
     # Image uploads + ordering
     path('manage/products/<int:product_id>/images/upload/', views.upload_product_image, name='upload_product_image'),

@@ -100,6 +100,79 @@ def delete_product(request, pk):
     messages.success(request, f"Product '{title}' deleted successfully.")
     return redirect('shop:manage_products')
 
+# BULK DELETE PRODUCTS
+
+@staff_required
+def bulk_delete(request):
+    if request.method == "POST":
+        ids = request.POST.getlist("selected_products[]")
+
+        if ids:
+            Product.objects.filter(id__in=ids).delete()
+            messages.success(request, f"Deleted {len(ids)} products.")
+        else:
+            messages.error(request, "No products selected.")
+
+    return redirect('shop:manage_products')
+
+
+# DUPLICATE PRODUCT
+
+@staff_required
+def duplicate_product(request, pk):
+    original = get_object_or_404(Product, pk=pk)
+
+    # --- 1: Duplicate the product ---------------------------
+    new_product = Product.objects.create(
+        title = original.title + " (Copy)",
+        slug = "",  # force regeneration
+        category = original.category,
+        description = original.description,
+        price = original.price,
+        stock = original.stock,
+        featured = original.featured,
+    )
+
+    # Regenerate slug
+    new_product.save()
+
+    # --- 2: Duplicate variants ------------------------------
+    for variant in original.variants.all():
+        ProductVariant.objects.create(
+            product=new_product,
+            name=variant.name,
+            stock=variant.stock,
+            price_adjust=variant.price_adjust,
+        )
+
+    # --- 3: Duplicate images (with file copy) ----------------
+    from django.core.files.base import ContentFile
+
+    for img in original.images.all():
+        old_file = img.image
+
+        if not old_file:
+            continue
+
+        # Read the existing file
+        old_file.open()
+        file_content = old_file.read()
+        old_file.close()
+
+        # Save new image
+        new_image = ProductImage(product=new_product)
+        new_filename = old_file.name.split("/")[-1]
+
+        new_image.image.save(
+            f"copy_{new_product.id}_{new_filename}",
+            ContentFile(file_content),
+            save=True
+        )
+
+    messages.success(request, f"Product '{original.title}' duplicated.")
+    return redirect('shop:edit_product', pk=new_product.pk)
+
+
 
 # ============================
 # IMAGE UPLOAD
